@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Google Ads Shopping Feed Checker</title>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons'>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/vuetify@1.1.8/dist/vuetify.min.css'>
+    <style>
+        #headlines a {
+            font-size: 16px;
+            color: #1a0dab;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        #exampleUrl {
+            color: #006621;
+            font-size: 14px;
+        }
+
+        #adv {
+            border: 1px solid #006621;
+            display: inline-block;
+            font-size: 12px;
+            margin-right: 8px;
+            padding: 0 2px;
+            vertical-align: baseline;
+            border-radius: 2px;
+        }
+
+        .gAdText {
+            color: #545454;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <v-app id="inspire" class="px-5 py-3">
+            <v-form ref="form" v-model="valid" lazy-validation>
+                <v-container fluid>
+                    <v-layout wrap align-center>
+                        <v-flex sm12>
+                            <div id="ad">
+                                <div id="headlines"><a :href="url">{{ head1 }} - {{ head2 }} - {{ head3 }}</a></div>
+                                <div id="exampleUrl">
+                                    <span id="adv">Adv.</span>
+                                    example.nl/{{ path1 }}/{{ path2 }}
+                                </div>
+                                <div class="gAdText">{{ adText1 }}</div>
+                                <div class="gAdText">{{ adText2 }}</div>
+                            </div>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-text-field v-model="url" label="Uiteindelijke URL"></v-text-field>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-text-field v-model="head1" :rules="headRules" :counter="30" label="Kop 1" required></v-text-field>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-text-field v-model="head2" :rules="headRules" :counter="30" label="Kop 2" required></v-text-field>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-text-field v-model="head3" :rules="headRules" :counter="30" label="Kop 3" required></v-text-field>
+                        </v-flex>
+                        <v-flex sm2>
+                            https://example.com/
+                        </v-flex>
+                        <v-flex sm5>
+                            <v-text-field v-model="path1" :rules="pathRules" :counter="15" label="Pad 1"></v-text-field>
+                        </v-flex>
+                        <v-flex sm5>
+                            <v-text-field v-model="path2" :rules="pathRules" :counter="15" label="Pad 2" required></v-text-field>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-textarea label="Beschrijving 1" v-model="adText1" :counter="90" :rules="adTextRules"></v-textarea>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-textarea label="Beschrijving 2" v-model="adText2" :counter="90" :rules="adTextRules"></v-textarea>
+                        </v-flex>
+
+                        <v-btn @click="clear">wissen</v-btn>
+
+                    </v-layout>
+                </v-container>
+            </v-form>
+        </v-app>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/vuetify@1.1.8/dist/vuetify.min.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: () => ({
+                valid: true,
+                url: '',
+                head1: '',
+                head2: '',
+                head3: '',
+                path1: '',
+                path2: '',
+                adText1: '',
+                adText2: '',
+                headRules: [
+                    v => (v && v.length <= 30) || 'Maximaal 30 karakters'
+                ],
+                pathRules: [
+                    v => (v && v.length <= 15) || 'Maximaal 15 karakters'
+                ],
+                adTextRules: [
+                    v => (v && v.length <= 90) || 'Maximaal 90 karakters'
+                ]
+            }),
+            methods: {
+                clear() {
+                    this.$refs.form.reset()
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
